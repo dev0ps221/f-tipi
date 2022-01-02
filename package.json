@@ -1,0 +1,20 @@
+{
+  "name": "ftipi",
+  "version": "1.0.0",
+  "description": "ftipi",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev0ps221/f-tipi.git"
+  },
+  "author": "El-Hadji Seybatou Mbengue",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dev0ps221/f-tipi/issues"
+  },
+  "homepage": "https://github.com/dev0ps221/f-tipi#readme"
+}
