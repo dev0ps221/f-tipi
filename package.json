@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/dev0ps221/f-tipi/issues"
   },
-  "homepage": "https://github.com/dev0ps221/f-tipi#readme"
+  "homepage": "https://github.com/dev0ps221/f-tipi#readme",
+  "dependencies": {
+    "basic-ftp": "^4.6.6",
+    "express": "^4.17.2",
+    "socket.io": "^4.4.0"
+  }
 }
