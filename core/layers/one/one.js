@@ -99,6 +99,21 @@ class FtpConnexion{
 }
 
 
+class FtipiWebCli{
+
+
+	setPage(page=null){
+		this.actualpage=page?page:this.actualpage
+	}
+
+	constructor(window){
+		this.layout = window
+		this.actualpage = null
+		this.setPage('home')
+	}
+	
+}
+
 
 class FtipiWebSocket{
 
@@ -127,11 +142,13 @@ class FtipiWebSocket{
 	}
 
     constructor(socket,ftipi){
+		console.log('new socket.io client connection')
 		this.manager 	= ftipi
 		this.socket 	= socket
 		this.servers	= []
+		this.configure()
 	}
 }
 module.exports = {
-	FtpConnexion,FtipiWebSocket
+	FtpConnexion,FtipiWebSocket,FtipiWebCli
 }

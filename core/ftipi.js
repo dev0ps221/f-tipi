@@ -1,7 +1,7 @@
 const path 				=	require('path')
 const { FtipiFile } 	= require('./layers/one/two/objects/core')
 const layerspath		=	path.join(__dirname,'layers/')
-const {FtpConnexion,FtipiWebSocket}	= 	require(path.join(layerspath,'one/one'))
+const {FtpConnexion,FtipiWebSocket,FtipiWebCli}	= 	require(path.join(layerspath,'one/one'))
 class FTeePee{
 
 	registerServer({creds,name}){
@@ -36,7 +36,12 @@ class FTeePee{
 
 	}
 
+	newWebCli(){
+		return FtipiWebCli.toString()
+	}
+
 	newWebSocket(socket){
+		
 		this.websockets.push(new FtipiWebSocket(socket,this))
 	}
 	

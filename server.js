@@ -12,9 +12,31 @@ const assetspath	=	path.join(__dirname,'webserver/assets')
 const ftipi		=   new new require(path.join(corepath,'ftipi'))
 const fs = require('fs')
 
+
+
+
+
 //webserver
 
+let rendertags = {}
+function registerRenderTag(tag,src){
+	rendertags[tag]={tag,src}
+}
+function getRenderTag(tag){
+	return rendertags.hasOwnProperty(tag) ? rendertags[tag] : null
+}
+function applyRenderTag(rendertag,viewstr){
+	return viewstr.replaceAll(rendertag.tag,rendertag.src)
+}
+function applyRenderTags(viewstr){
 
+	Object.keys(rendertags).forEach(
+		rendertag=>{
+			viewstr = applyRenderTag(rendertags[rendertag],viewstr)
+		}
+	)
+	return viewstr
+}
 function configureApp(app){
 	app.use('/',express.static(path.join(assetspath)))
 	app.use('/sio',express.static(path.join(__dirname,'node_modules/socket.io/client-dist/socket.io.min.js')))
@@ -25,19 +47,44 @@ function startServer(cb=()=>{}){
 
 	io.listen(server)
 
+	io.on(
+		'connection',(socket)=>{
+			ftipi.newWebSocket(socket)
+		}
+	)
+
+	
 	function doRender(page){
 
-		return fs.readFileSync(path.join(viewspath,'index.html')).toString().replace(
-			'#body',`
-				${fs.readFileSync(path.join(viewspath,'topbar.html'))}
-				${fs.readFileSync(path.join(viewspath,`${page}.html`))}
-			`
-		)
+		registerRenderTag(
+			'{{#body}}',`
+			${fs.readFileSync(path.join(viewspath,'topbar.html'))}
+			${fs.readFileSync(path.join(viewspath,`${page}.html`))}
+		`)
+		
+		registerRenderTag(
+			'{{#registerserver}}',`
+			${fs.readFileSync(path.join(viewspath,'registerserver.html'))}
+		`)
+
+		return applyRenderTags(fs.readFileSync(path.join(viewspath,'index.html')).toString())
 
 	}
 
 
 	configureApp(app)
+
+	app.get(
+		'/webcli.js',
+		(req,res)=>{
+			res.header(
+				'Content-type','text/javascript'
+			)
+			res.send(
+				ftipi.newWebCli()
+			)
+		}
+	)
 
 	app.get(
 		'/',(req,res)=>{

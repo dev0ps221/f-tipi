@@ -1,29 +1,39 @@
+<style>
+    #servers{
+        margin: 0;
+        padding: 2%;
+        height: 96%;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
 <section id='servers'>
+    {{#registerserver}}
     <!-- little skeleton, we will later automate the view in js -->
-    <section class="server">
-        <div class="server-head">
-            <h1>
-                servername
-            </h1>
-        </div>
-        <div class="server-infos">
-            <span class="info">
-                <label>username</label>
-                <span class="server-username">
-                    username
+    <ul class="list">
+        <section class="server">
+            <div class="server-head">
+                <h1>
+                    servername
+                </h1>
+            </div>
+            <div class="server-infos">
+                <span class="info">
+                    <label>username</label>
+                    <span class="server-username">
+                        username
+                    </span>
                 </span>
-            </span>
-        </div>
-        <div class="server-foot">
-            <span class="action">
-                <button class="doconnect">
-                    connect
-                </button>
-            </span>
-        </div>
-    </section>
+            </div>
+            <div class="server-foot">
+                <span class="action">
+                    <button class="doconnect">
+                        connect
+                    </button>
+                </span>
+            </div>
+        </section>
+    </ul>
 </section>
-<script src='/sio'>
-</script>
-<script src='/js/socket.js'>
+<script src='/js/servers.js'>
 </script>

@@ -1,5 +1,12 @@
+cli.setPage(
+    'servers'
+)
 post(
     '/servers',null,(servers)=>{
-        console.log('got servers list')
+
+
+        document.cookie = `servers=${JSON.stringify(servers)}`
+
+
     }
 )
