@@ -97,6 +97,41 @@ class FtpConnexion{
 		this.setupClient()
 	}
 }
+
+
+
+class FtipiWebSocket{
+
+	configure(){
+		this.socket.on(
+			'/servers',()=>{
+				this.emitServers()
+			}
+		)
+	}
+
+	emitServers(){
+		this.socket.emit(
+			'/serversRes',this.manager.getServers()
+		)
+	}
+
+	registerServer(data){
+		this.servers.push(this.manager.registerServer(data))
+		this.emitServers()
+		return this.servers
+	}
+
+	getServers(){
+		return this.servers
+	}
+
+    constructor(socket,ftipi){
+		this.manager 	= ftipi
+		this.socket 	= socket
+		this.servers	= []
+	}
+}
 module.exports = {
-	FtpConnexion
+	FtpConnexion,FtipiWebSocket
 }

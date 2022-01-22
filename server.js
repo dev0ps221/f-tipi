@@ -13,7 +13,16 @@ const ftipi		=   new new require(path.join(corepath,'ftipi'))
 const fs = require('fs')
 
 //webserver
+
+
+function configureApp(app){
+	app.use('/',express.static(path.join(assetspath)))
+	app.use('/sio',express.static(path.join(__dirname,'node_modules/socket.io/client-dist/socket.io.min.js')))
+	app.use('/socket.io.min.js.map',express.static(path.join(__dirname,'node_modules/socket.io/client-dist/socket.io.min.js.map')))
+}
+
 function startServer(cb=()=>{}){
+
 	io.listen(server)
 
 	function doRender(page){
@@ -27,6 +36,9 @@ function startServer(cb=()=>{}){
 
 	}
 
+
+	configureApp(app)
+
 	app.get(
 		'/',(req,res)=>{
 			res.send(doRender(
@@ -37,6 +49,7 @@ function startServer(cb=()=>{}){
 	)
 
 	server.listen(port,serverStarted)
+
 }
 
 function serverStarted(errors) {
@@ -47,9 +60,6 @@ function serverStarted(errors) {
 	console.log(`listening on port ${port}`) 
 
 }
-
-
-
 
 
 if(port)	startServer()

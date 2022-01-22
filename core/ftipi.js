@@ -1,13 +1,14 @@
 const path 				=	require('path')
+const { FtipiFile } 	= require('./layers/one/two/objects/core')
 const layerspath		=	path.join(__dirname,'layers/')
-const {FtpConnexion}	= 	require(path.join(layerspath,'one/one'))
+const {FtpConnexion,FtipiWebSocket}	= 	require(path.join(layerspath,'one/one'))
 class FTeePee{
 
 	registerServer({creds,name}){
 		this.servers[name] = new FtpConnexion(creds,name)
 			
 		
-
+		return this.servers[name]
 	}
 
 	getServer(name){
@@ -34,10 +35,15 @@ class FTeePee{
 		return (this.funcs.hasOwnProperty(name)) ? this.funcs[name](cb)	:	null
 
 	}
+
+	newWebSocket(socket){
+		this.websockets.push(new FtipiWebSocket(socket,this))
+	}
 	
 	constructor(){
 		this.funcs		=	{}
 		this.servers 	=	{}
+		this.websockets = 	[]
 	}
 
 }
