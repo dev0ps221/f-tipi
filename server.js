@@ -7,7 +7,8 @@ const server	=	http.createServer(app)
 const io 		=	sio()
 const port		=	process.env.PORT || 8000
 const corepath	=	path.join(__dirname,'core/')
-const homecreds =   require('./homecreds')
+//test creds
+const homecreds =   require('./../homecreds')
 const ftipi		=   new new require(path.join(corepath,'ftipi'))
 
 
