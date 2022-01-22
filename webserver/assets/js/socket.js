@@ -14,3 +14,20 @@ function post(trigger,data,cb){
         `${trigger}Res`,cb
     )
 }
+
+function COOKIES(){
+    let cooks = {};
+    document.cookie.split(';').forEach(
+        elem=>{
+            let cook = elem.trim().split('=');cooks[cook[0]]=cook[1]
+        }
+    )
+    return cooks
+}
+
+function hasServs(){
+    return COOKIES().hasOwnProperty('servers')&&JSON.parse(COOKIES()['servers']).length
+}
+if(hasServs()){
+    
+}

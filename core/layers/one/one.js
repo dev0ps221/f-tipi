@@ -101,15 +101,69 @@ class FtpConnexion{
 
 class FtipiWebCli{
 
+	
+
 
 	setPage(page=null){
+		let document = this.document
 		this.actualpage=page?page:this.actualpage
+	}
+
+	handlePage(){
+
+		if(this.actualpage == 'servers'){
+
+			post(
+				'/servers',null,(servers)=>{
+
+					alert('servers')
+					document.cookie = `servers=${JSON.stringify(servers)}`
+
+
+				}
+			)
+
+			const registerserver = document.querySelector('#registerserver')
+			const namefield = registerserver.querySelector('#name')
+			const hostfield = registerserver.querySelector('#hostname')
+			const userfield = registerserver.querySelector('#username')
+			const passwordfield = registerserver.querySelector('#password')
+			const addserver = registerserver.querySelector('#addserver')
+			this.layout.newServerData = {
+			}
+			this.layout.updateNewServerData=()=>{
+				const 
+					name = namefield.value
+					,host = hostfield.value
+					,user = userfield.value
+					,password = passwordfield.value
+
+				this.layout.newServerData = {
+					name,creds:{host,user,password}
+				}
+			}
+			this.layout.newServer=()=>{
+				this.layout.updateNewServerData()
+				post(
+					'addServer',this.layout.newServerData
+				)
+			}
+			this.layout.updateNewServerData()
+			addserver.addEventListener(
+				'click',(e)=>{
+					e.preventDefault()
+					this.layout.newServer()
+				}
+			)
+		}
 	}
 
 	constructor(window){
 		this.layout = window
+		this.document = this.layout.document
 		this.actualpage = null
 		this.setPage('home')
+		this.handlePage()
 	}
 	
 }
@@ -118,16 +172,22 @@ class FtipiWebCli{
 class FtipiWebSocket{
 
 	configure(){
+
 		this.socket.on(
 			'/servers',()=>{
 				this.emitServers()
+			}
+		)
+		this.socket.on(
+			'addServer',data=>{
+				this.registerServer(data)
 			}
 		)
 	}
 
 	emitServers(){
 		this.socket.emit(
-			'/serversRes',this.manager.getServers()
+			'/serversRes',this.getServers()
 		)
 	}
 
