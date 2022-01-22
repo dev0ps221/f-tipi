@@ -51,6 +51,10 @@ class FtipiFile{
 
     }
 
+    who(){
+        return this
+    }
+
 }
 
 class FtipiFolder extends FtipiFile{
@@ -59,11 +63,8 @@ class FtipiFolder extends FtipiFile{
         this._type = FtipiFolder
         return this
     }
-    processData(data){
-        console.log('folder data is ',data)
-    }
-    who(){
-        return this
+    open(){
+
     }
 }
 

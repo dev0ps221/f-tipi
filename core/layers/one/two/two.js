@@ -55,6 +55,8 @@ class ConnectionActions{
   setCurrentDirContent(content,cb){
     content.forEach(
       file=>{
+        file.path = this.currentdir
+        file.fullpath = `${this.currentdir}/${file.name}`
         this.currentdircontent.push(
           new this.core[file.type === 'd' ? 'FtipiFolder' : 'FtipiFile'](file) 
         )

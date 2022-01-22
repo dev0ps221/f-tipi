@@ -7,38 +7,9 @@ const server	=	http.createServer(app)
 const io 		=	sio()
 const port		=	process.env.PORT || 8000
 const corepath	=	path.join(__dirname,'core/')
-//test creds
-const homecreds =   require('./../homecreds')
 const ftipi		=   new new require(path.join(corepath,'ftipi'))
 
-
-ftipi.registerServer({creds:homecreds,name:"Home"})
-
-//this is a test
-let homeserver = ftipi.servers[0] 
-homeserver.connect()
-homeserver.whenReady(
-	()=>{
-		console.log('home is ready')
-		let run = (homeserver.do(
-			'list'
-			,(error,content)=>{
-				homeserver.do(
-					'pwd',(workingdir)=>{
-						console.log('data on ',workingdir)
-						console.log('errors ',error)
-						homeserver.refreshCurrentDirContent(content,(dircontent)=>{
-							console.log(dircontent)
-						})
-					}
-				)
-			}
-		))
-		console.log('ran == ',run)
-	}
-)
-//this is a test
-
+//webserver
 function startServer(cb=()=>{}){
 	io.listen(server)
 
@@ -52,7 +23,7 @@ function serverStarted(errors) {
 		console.log(`errors running server on port ${port}`)
 		return
 	}
-	console.log(`listening on port ${port}`) //good, nioungui baax
+	console.log(`listening on port ${port}`) 
 
 }
 
