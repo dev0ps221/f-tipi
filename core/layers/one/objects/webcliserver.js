@@ -63,11 +63,36 @@ class FtipiWebCliServer{
 
     }
 
+	getFileExtension(name){
+		let namearr = name.split('.')
+		return namearr[namearr.length-1] 
+
+	}
+
 	buildContentListElem({type,infos}){
 		const elem = document.createElement('li')
 		const elemico = document.createElement('img')
 		elemico.classList.add('typeico')
-		elemico.src = `/pics/${type.toLowerCase().replace('ftipi','')}.ico`
+		let filetype = `${type.toLowerCase().replace('ftipi','')}`
+		let fileextension = this.getFileExtension(infos.name)
+		filetype = `${fileextension=='txt'?'text':''}${filetype}`
+		filetype = `${fileextension=='sql'?'sql':''}${filetype}`
+		filetype = `${fileextension=='php'?'php':''}${filetype}`
+		filetype = `${fileextension=='png'?'png':''}${filetype}`
+		filetype = `${fileextension=='jpeg'?'jpeg':''}${filetype}`
+		filetype = `${fileextension=='jpg'?'jpg':''}${filetype}`
+		filetype = `${fileextension=='gif'?'gif':''}${filetype}`
+		filetype = `${fileextension=='ico'?'ico':''}${filetype}`
+		filetype = `${fileextension=='avi'?'avi':''}${filetype}`
+		filetype = `${fileextension=='mp4'?'mp4':''}${filetype}`
+		filetype = `${fileextension=='mpeg4'?'mpeg4':''}${filetype}`
+		filetype = `${fileextension=='3gp'?'3gp':''}${filetype}`
+		filetype = `${fileextension=='html'?'html':''}${filetype}`
+		filetype = `${fileextension=='mp3'?'mp3':''}${filetype}`
+		filetype = `${fileextension=='wav'?'wav':''}${filetype}`
+		filetype = `${fileextension=='ogg'?'ogg':''}${filetype}`
+		filetype = `${fileextension=='rb'?'ruby':''}${filetype}`
+		elemico.src = `/pics/${filetype}.ico`
 		elem.appendChild(elemico)
 
 		const name = document.createElement('span')
