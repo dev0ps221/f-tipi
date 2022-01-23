@@ -11,10 +11,11 @@ class FtipiWebCliServer{
 	buildWebView(){
     
 		const serverview = document.createElement('div')
+		serverview.classList.add('server')
 		const head       = document.createElement('div')
+		head.classList.add('server-head')
 		const name       = document.createElement('h1')
 		name.innerText   = `${this.name} at ${this.host}`
-		head.classList.add('server-head')
 		const infos       = document.createElement('div')
 		infos.classList.add('server-infos')
 		const username  = document.createElement('div')
@@ -25,6 +26,7 @@ class FtipiWebCliServer{
 		infos.appendChild(hostname)
 		const foot       = document.createElement('div')
 		const connectbutton = document.createElement('button')
+		connectbutton.classList.add('connectToServer')
 		connectbutton.innerText = 'connect'
 		foot.appendChild(connectbutton)
 		connectbutton.addEventListener(

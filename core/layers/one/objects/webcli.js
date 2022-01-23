@@ -43,7 +43,11 @@ class FtipiWebCli{
 
 	refreshServersView(){
 		const serversview  = document.querySelector('#servers .list')
+		const label = document.createElement('h1')
+		label.classList.add('list-label')
+		label.innerText = 'servers'
 		serversview.innerHTML = "" 
+		serversview.appendChild(label)
 		this.servers.forEach(
 			server=>{
 				serversview.appendChild(

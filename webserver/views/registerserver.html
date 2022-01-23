@@ -1,14 +1,19 @@
 <style>
     #registerserver{
         height: 12%;
+        background: linear-gradient(to bottom,rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.3));
+        color: white;
+        flex-direction:column ;
+        justify-content: center;
     }
     #registerserver,#registerserver form,#registerserver form fieldset{
         display: flex;
         padding: 0;
         margin: 0;
         width: 100%;
+        border: none;
+        box-shadow: 0 0 0.5px #2b1100;
     }
-    
     #registerserver form fieldset{
         flex-direction: row;
         justify-content: space-around;
@@ -18,9 +23,6 @@
 <section id='registerserver'>
     <form action="">
         <fieldset>
-            <legend>
-                add a server
-            </legend>
             <div class="field">
                 <label for="hostname">server name</label>
                 <input type="text" id='name' name='name' placeholder="server name">
