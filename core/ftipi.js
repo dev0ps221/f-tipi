@@ -21,7 +21,7 @@ class FTeePee{
 		let ret = []
 		Object.keys(this.servers).forEach(
 			servername=>{
-				ret.push(this.servers[servername])
+				ret.push(this.servers[servername].get())
 			}
 		)
 		return ret

@@ -22,6 +22,13 @@ class FtpConnexion{
 			this.connectionError(error)
 		}
 	}
+	get(){
+		const name = this.n
+		,{host,user} = this.c()
+		return {
+			name,host,user
+		}
+	}
 	setClientActions(){
 		this.actions = new ConnectionActions(this.client)
 		this.actions.whenReady(
@@ -109,6 +116,11 @@ class FtipiWebCli{
 		this.actualpage=page?page:this.actualpage
 	}
 
+	connectToServer(event,server){
+		console.log(server)
+		alert("let's connect to the server")
+	}
+
 	handlePage(){
 
 		if(this.actualpage == 'servers'){
@@ -116,9 +128,9 @@ class FtipiWebCli{
 			post(
 				'/servers',null,(servers)=>{
 
-					alert('servers')
-					document.cookie = `servers=${JSON.stringify(servers)}`
 
+					document.cookie = `servers=${JSON.stringify(servers)}`
+					refreshServersView(servers)
 
 				}
 			)
@@ -198,7 +210,7 @@ class FtipiWebSocket{
 	}
 
 	getServers(){
-		return this.servers
+		return this.servers.map(server=>server.get())
 	}
 
     constructor(socket,ftipi){
