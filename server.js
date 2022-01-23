@@ -66,6 +66,11 @@ function startServer(cb=()=>{}){
 			'{{#registerserver}}',`
 			${fs.readFileSync(path.join(viewspath,'registerserver.html'))}
 		`)
+		
+		registerRenderTag(
+			'{{#connectedservers}}',`
+			${fs.readFileSync(path.join(viewspath,'connectedservers.html'))}
+		`)
 
 		return applyRenderTags(fs.readFileSync(path.join(viewspath,'index.html')).toString())
 

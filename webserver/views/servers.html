@@ -1,14 +1,25 @@
 <style>
     #servers{
         margin: 0;
-        padding: 2%;
-        height: 96%;
+        height: 86%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    #servers .list,#servers #connectedservers{
         display: flex;
         flex-direction: column;
     }
+    #servers .list{
+        width: 20%;
+        height: 100%;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+
 </style>
+{{#registerserver}}
 <section id='servers'>
-    {{#registerserver}}
     <!-- little skeleton, we will later automate the view in js -->
     <ul class="list">
         <section class="server">
@@ -34,6 +45,7 @@
             </div>
         </section>
     </ul>
+    {{#connectedservers}}
 </section>
 <script src='/js/servers.js'>
 </script>
