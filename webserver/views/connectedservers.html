@@ -44,10 +44,18 @@
 #servers #connected-servers #browse div{
     height: 5%;
 }
-#servers #connected-servers #browse ul{
+#servers #connected-servers #browse #browse-list{
     padding: 0;
+    padding-bottom: 5%;
     height: 95%;
     overflow-y: scroll;
+}
+#servers #connected-servers #browse #browse-list li{
+    display: flex;
+    flex-direction: row;
+}
+#servers #connected-servers #browse #browse-list li .typeico{
+    width:4%;
 }
 </style>
 <section id='connected-servers'>

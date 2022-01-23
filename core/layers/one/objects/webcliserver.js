@@ -63,9 +63,18 @@ class FtipiWebCliServer{
 
     }
 
-	buildContentListElem(data){
+	buildContentListElem({type,infos}){
 		const elem = document.createElement('li')
-		elem.innerText = data.type
+		const elemico = document.createElement('img')
+		elemico.classList.add('typeico')
+		elemico.src = `/pics/${type.toLowerCase().replace('ftipi','')}.ico`
+		elem.appendChild(elemico)
+
+		const name = document.createElement('span')
+		name.innerText = infos.name
+
+		elem.appendChild(name)
+
 		return elem
 	}
 
