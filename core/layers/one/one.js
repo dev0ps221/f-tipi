@@ -4,18 +4,24 @@ const layerspath		=	path.join(__dirname)
 const {ConnectionActions}	= 	require(path.join(layerspath,'two/two'))
 
 class FtpConnexion{
-	connect(){
+	connect(cb){
 		try{
 
 			this.client.connect(this.c())
 
 			this.client.on(
 				'ready',
-				()=>{this.connectionSuccess(this.client)}
+				()=>{
+					this.connectionSuccess(this.client)
+					if(cb)cb(null)		
+				}
 			)
 			this.client.on(
 				'error',
-				(e)=>{this.connectionError(e)}
+				(e)=>{
+					this.connectionError(e)
+					if(cb)cb(e)
+				}
 			)
 
 		}catch(error){
@@ -105,6 +111,67 @@ class FtpConnexion{
 	}
 }
 
+class FtipiWebCliServer{
+
+	assignData(data){
+		Object.keys(data).forEach(
+			prop=>{
+				this[prop] = data[prop]
+			}
+		)
+	}
+
+	buildWebView(){
+    
+		const serverview = document.createElement('div')
+		const head       = document.createElement('div')
+		const name       = document.createElement('h1')
+		name.innerText   = `${this.name} at ${this.host}`
+		head.classList.add('server-head')
+		const infos       = document.createElement('div')
+		infos.classList.add('server-infos')
+		const username  = document.createElement('div')
+		username.innerText = `username :: ${this.user}`
+		infos.appendChild(username)
+		const hostname  = document.createElement('div')
+		hostname.innerText = `hostname :: ${this.host}`
+		infos.appendChild(hostname)
+		const foot       = document.createElement('div')
+		const connectbutton = document.createElement('button')
+		connectbutton.innerText = 'connect'
+		foot.appendChild(connectbutton)
+		connectbutton.addEventListener(
+			'click'
+			,(e)=>this.connect(e)
+		)
+		foot.classList.add('server-foot')
+		
+		head.appendChild(name)
+	
+		serverview.appendChild(head)
+		serverview.appendChild(infos)
+		serverview.appendChild(foot)
+		
+		return serverview
+	
+	}
+
+	updateView(){
+		alert('lets update connected server view then')
+		console.log(this)
+	}
+
+	connect(event){
+		cli.connectToServer(this)
+	}
+
+	constructor(data){
+		this.data = data
+		this.assignData(data)
+		this.status
+	}
+
+}
 
 class FtipiWebCli{
 
@@ -116,21 +183,47 @@ class FtipiWebCli{
 		this.actualpage=page?page:this.actualpage
 	}
 
-	connectToServer(event,server){
-		console.log(server)
-		alert("let's connect to the server")
+	connectToServer(server){
+		post(
+			'connectToServer',server.name
+		)
+	}
+
+	serverConnected(server){
+		alert('successfully connected to '+server.name)
+		this.getServer(server).updateView()
+	}
+
+
+	refreshServersView(){
+		const serversview  = document.querySelector('#servers .list')
+		serversview.innerHTML = "" 
+		this.servers.forEach(
+			server=>{
+				serversview.appendChild(
+					server.buildWebView()
+				)
+			}
+		)
 	}
 
 	handlePage(){
 
 		if(this.actualpage == 'servers'){
 
+			get(
+				'serverConnected',name=>{
+					this.serverConnected(this.getServerByName(name))
+				}
+			)
+
 			post(
 				'/servers',null,(servers)=>{
 
 
 					document.cookie = `servers=${JSON.stringify(servers)}`
-					refreshServersView(servers)
+					this.updateServers()
+					this.refreshServersView()
 
 				}
 			)
@@ -170,6 +263,26 @@ class FtipiWebCli{
 		}
 	}
 
+	getServerByName(name){
+		let server = null
+		this.servers.forEach(
+			serv=>{
+				if(serv.name === name)server = serv
+			}
+		)
+		return server
+	}
+
+	updateServers(){
+		this.servers = JSON.parse(COOKIES()['servers']).map(
+			server=>{
+				return new FtipiWebCliServer(server)
+			}
+		)
+		console.log('updated servers')
+		console.log(this.servers)
+	}
+
 	constructor(window){
 		this.layout = window
 		this.document = this.layout.document
@@ -195,6 +308,28 @@ class FtipiWebSocket{
 				this.registerServer(data)
 			}
 		)
+		this.socket.on(
+			'connectToServer',name=>{
+				this.connectToServer(name)
+			}
+		)
+
+	}
+
+	connectToServer(name){
+		const server = this.manager.getServer(name)
+		if(server){
+			this.manager.connectToServer(name,(e)=>{
+				if(e)console.log(e)
+				else{
+					this.connectedservers[name] = server
+					this.socket.emit(
+						'serverConnected',name
+					)
+				}
+
+			})
+		}
 	}
 
 	emitServers(){
@@ -218,9 +353,10 @@ class FtipiWebSocket{
 		this.manager 	= ftipi
 		this.socket 	= socket
 		this.servers	= []
+		this.connectedservers	= {}
 		this.configure()
 	}
 }
 module.exports = {
-	FtpConnexion,FtipiWebSocket,FtipiWebCli
+	FtpConnexion,FtipiWebSocket,FtipiWebCli,FtipiWebCliServer
 }

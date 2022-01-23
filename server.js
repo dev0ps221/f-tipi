@@ -87,6 +87,18 @@ function startServer(cb=()=>{}){
 	)
 
 	app.get(
+		'/webcliserver.js',
+		(req,res)=>{
+			res.header(
+				'Content-type','text/javascript'
+			)
+			res.send(
+				ftipi.newWebCliServer()
+			)
+		}
+	)
+
+	app.get(
 		'/',(req,res)=>{
 			res.send(doRender(
 				'servers'
