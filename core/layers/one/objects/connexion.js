@@ -29,6 +29,11 @@ class FtpConnexion{
 			this.connectionError(error)
 		}
 	}
+	getContent(cb){
+		this.do(
+			'getContent',cb
+		)
+	}
 	get(){
 		const name = this.n
 		,{host,user} = this.c()

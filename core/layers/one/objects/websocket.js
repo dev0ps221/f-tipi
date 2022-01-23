@@ -19,6 +19,22 @@ class FtipiWebSocket{
 				this.connectToServer(name)
 			}
 		)
+		this.socket.on(
+			'/currentdirData',name=>{
+				const server = this.manager.getServer(name)
+				if(server){
+					server.getContent(
+						(data)=>{
+							this.socket.emit(
+								'/currentdirDataRes',data,name
+							)
+						}
+					)
+				}else{
+					console.log('log missed the server ',name)
+				}
+			}
+		)
 
 	}
 

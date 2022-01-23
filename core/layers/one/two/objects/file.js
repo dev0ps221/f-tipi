@@ -20,7 +20,7 @@ class FtipiFile{
     }
 
     processopts(opts){
-        console.log(opts)
+        // console.log(opts)
     }
 
     type(){
@@ -36,7 +36,10 @@ class FtipiFile{
     }
 
     get(){
-
+        return {
+            type:this.type(),
+            infos:this.raw
+        }
     }
 
     rename(){

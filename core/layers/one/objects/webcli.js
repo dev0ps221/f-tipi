@@ -15,10 +15,31 @@ class FtipiWebCli{
 	}
 
 	serverConnected(server){
-		alert('successfully connected to '+server.name)
-		this.getServer(server).updateView()
+
+        this.connectedservers[server.name] = server
+
+        this.refreshConnectedServersView()
+
+
+
+    }
+
+    focusedConnection(){
+        const conlist = Object.keys(this.connectedservers)
+        const conlistsize = conlist.length
+        const connection = conlistsize
+            ?   this.connectedservers[conlist[this.conIdx()]]
+            :   null
+		console.log(connection)
+		return connection
 	}
 
+    conIdx(){
+        const conlist = Object.keys(this.connectedservers)
+        const conlistsize = conlist.length
+        this.connectedIdx = this.connectedIdx < 0 ? conlistsize-1 : this.connectedIdx
+        return this.connectedIdx
+    }
 
 	refreshServersView(){
 		const serversview  = document.querySelector('#servers .list')
@@ -32,6 +53,21 @@ class FtipiWebCli{
 		)
 	}
 
+
+    refreshContentViewNav(root){
+        const nav = root.querySelector('#nav')
+		
+    }
+
+	refreshConnectedServersView(){
+        const actualserver = this.focusedConnection()
+		const connectedservers  = document.querySelector('#connected-servers')
+		this.refreshContentViewNav(connectedservers)
+		if(actualserver){
+			actualserver.updateContentView()
+        }
+	}
+
 	handlePage(){
 
 		if(this.actualpage == 'servers'){
@@ -39,6 +75,12 @@ class FtipiWebCli{
 			get(
 				'serverConnected',name=>{
 					this.serverConnected(this.getServerByName(name))
+				}
+			)
+
+			get(
+				'/currentdirDataRes',(data,name)=>{
+					this.getServerByName(name).setContent(data)
 				}
 			)
 
@@ -112,6 +154,8 @@ class FtipiWebCli{
 		this.layout = window
 		this.document = this.layout.document
 		this.actualpage = null
+        this.connectedservers = {}
+        this.connectedIdx = -1
 		this.setPage('home')
 		this.handlePage()
 	}

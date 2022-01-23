@@ -27,6 +27,27 @@ class ConnectionActions{
 
   }
 
+  async updateContent(cb){
+    this.whenReady(
+      ()=>{
+        this.list(
+          this.currentdir,(e,data)=>{
+            if(e) console.log(e)
+            this.setCurrentDirContent(data,cb)
+          }
+        )
+      }
+    )
+  }
+
+  getContent(cb){
+    this.updateContent(
+      data=>{
+        cb({content:data.map(elem=>elem.get()),dirpath:this.currentdir})
+      }
+    )
+  }
+
   async list(pth="",cb=(e,r)=>{console.log("DEFAULT ACTION >> PRINT <<",e,r)}){
     return await this.client.list(pth,cb)
   }
@@ -71,13 +92,19 @@ class ConnectionActions{
       return null
     }
     this.client = client
-    this.core   = require(path.join(currentobjectspath,'core'))
+    this.core   = {FtipiFile,FtipiFolder}
     this.currentdir = null
     this.currentdircontent = []
     this.pwd(
       (currentdir)=>{
         this.currentdir = currentdir
         this.ready = 1
+        this.updateContent(
+          ()=>{    
+
+          }
+        )
+
       }
     )
   }

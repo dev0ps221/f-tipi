@@ -43,19 +43,85 @@ class FtipiWebCliServer{
 	
 	}
 
-	updateView(){
+
+	
+    refreshContentViewBrowse(root){
+		const browse = root.querySelector('#browse')
+		
+		
+		const currentdir = browse.querySelector('#currentdir')
+		currentdir.innerText = this.actualpath
+
+		const contentlist = browse.querySelector("#browse-list")
+		this.content.forEach(
+			elem=>{
+				contentlist.appendChild(this.buildContentListElem(elem))
+			}
+		)
+
+    }
+
+	buildContentListElem(data){
+		const elem = document.createElement('li')
+		elem.innerText = data.type
+		return elem
+	}
+
+	updateContentView(){
 		alert('lets update connected server view then')
-		console.log(this)
+
+		if(this.content){
+			const connectedservers  = document.querySelector('#connected-servers')
+			cli.refreshContentViewNav(connectedservers)
+			this.refreshContentViewBrowse(connectedservers)
+
+		}else{
+			this.getContent()
+		}
 	}
 
 	connect(event){
 		cli.connectToServer(this)
 	}
 
+	isTheFocus(){
+		const actual = cli.focusedConnection()
+		return actual.name === this.name
+	}
+
+	contentLoop(){
+		const contentinterval = 5000
+		this.checkContent = setInterval(
+			()=>{
+				if(this.gotcontent){
+					if(this.isTheFocus()){
+						cli.refreshConnectedServersView()
+					}
+					this.gotcontent = false
+				}
+			},contentinterval
+		)
+	}
+
+	setContent({content,dirpath}){
+		this.content = content
+		this.actualpath = dirpath
+		this.gotcontent = true
+	}
+	
+	getContent(){
+		post(
+			'/currentdirData',this.name
+		)
+	}
+
 	constructor(data){
 		this.data = data
+		this.content = null
+		this.gotcontent = false
 		this.assignData(data)
 		this.status
+		this.contentLoop()
 	}
 
 }

@@ -25,13 +25,29 @@
 #servers #connected-servers #nav ul{
     display: flex;
     width: 100%;
-    height: 100%;
     padding: 0;
+    height: 100%;
     flex-direction: row;
     justify-content: left;
 }
-#servers #connected-servers #nav ul li{
+#servers #connected-servers > * > ul li{
     list-style-type: none;
+}
+#servers #connected-servers #browse{
+    height: 95%;
+}
+#servers #connected-servers #browse div,#servers #connected-servers #browse li{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+#servers #connected-servers #browse div{
+    height: 5%;
+}
+#servers #connected-servers #browse ul{
+    padding: 0;
+    height: 95%;
+    overflow-y: scroll;
 }
 </style>
 <section id='connected-servers'>
