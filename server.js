@@ -26,7 +26,7 @@ function getRenderTag(tag){
 	return rendertags.hasOwnProperty(tag) ? rendertags[tag] : null
 }
 function applyRenderTag(rendertag,viewstr){
-	return viewstr.replaceAll(rendertag.tag,rendertag.src)
+	return viewstr.split(rendertag.tag).join(rendertag.src)
 }
 function applyRenderTags(viewstr){
 
