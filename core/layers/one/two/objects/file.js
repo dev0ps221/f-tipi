@@ -57,17 +57,5 @@ class FtipiFile{
 
 }
 
-class FtipiFolder extends FtipiFile{
-    constructor(data,opts={}){
-        super(data,opts)
-        this._type = FtipiFolder
-        return this
-    }
-    open(){
 
-    }
-}
-
-module.exports = {
-    FtipiFolder,FtipiFile
-}
+module.exports = FtipiFile

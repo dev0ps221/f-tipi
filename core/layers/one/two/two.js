@@ -1,7 +1,8 @@
 const path = require('path')
 const { clearInterval } = require('timers')
-const { FtipiFile } = require('./objects/core')
 const currentpath = path.join(__dirname)
+const FtipiFile   = require(path.join(currentpath,'/objects/file'))
+const FtipiFolder = require(path.join(currentpath,'/objects/folder'))
 const currentobjectspath = path.join(currentpath,'objects')
 
 

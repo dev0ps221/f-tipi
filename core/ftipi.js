@@ -1,13 +1,12 @@
 const path 				=	require('path')
-const { FtipiFile } 	= require('./layers/one/two/objects/core')
 const layerspath		=	path.join(__dirname,'layers/')
+const FtipiFile   = require(path.join(layerspath,'one/two/objects/file'))
+const FtipiFolder = require(path.join(layerspath,'one/two/objects/folder'))
 const {FtpConnexion,FtipiWebSocket,FtipiWebCli,FtipiWebCliServer}	= 	require(path.join(layerspath,'one/one'))
 class FTeePee{
 
 	registerServer({creds,name}){
 		this.servers[name] = new FtpConnexion(creds,name)
-			
-		
 		return this.servers[name]
 	}
 
