@@ -1,0 +1,58 @@
+
+#servers #connected-servers{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    border: 1px solid black;
+    flex-direction:column ;
+}
+#servers #connected-servers #nav,#servers #connected-servers #browse{
+    display: flex;
+    flex-direction:column ;
+    padding: 1%;
+    width: 98%;
+}
+#servers #connected-servers #nav{
+    display: flex;
+    justify-content: center;
+    height: 5%;
+    background: #0b2228;
+    color: #0066ff;
+    overflow:hidden;
+    overflow-x: scroll;
+}
+#servers #connected-servers #nav ul{
+    display: flex;
+    width: 100%;
+    padding: 0;
+    height: 100%;
+    flex-direction: row;
+    justify-content: left;
+}
+#servers #connected-servers > * > ul li{
+    list-style-type: none;
+}
+#servers #connected-servers #browse{
+    height: 95%;
+}
+#servers #connected-servers #browse div,#servers #connected-servers #browse li{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+#servers #connected-servers #browse div{
+    height: 5%;
+}
+#servers #connected-servers #browse #browse-list{
+    padding: 0;
+    padding-bottom: 5%;
+    height: 95%;
+    overflow-y: scroll;
+}
+#servers #connected-servers #browse #browse-list li{
+    display: flex;
+    flex-direction: row;
+}
+#servers #connected-servers #browse #browse-list li .typeico{
+    width:4%;
+}

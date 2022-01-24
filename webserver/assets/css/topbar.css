@@ -1,0 +1,9 @@
+header{
+    padding:0;
+    padding-left:1%;
+    padding-right:1%;
+    height: 12%;
+    display: flex;
+    background: #0b2228;
+    color: #0066ff;
+}
