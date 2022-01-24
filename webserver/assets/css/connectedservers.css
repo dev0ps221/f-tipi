@@ -52,7 +52,16 @@
 #servers #connected-servers #browse #browse-list li{
     display: flex;
     flex-direction: row;
+    cursor: pointer;
+    border-top: 1px solid rgba(0,0,0,0.5);
+}
+#servers #connected-servers #browse #browse-list li:hover{
+    background: rgba(0,0,0,0.3);
 }
 #servers #connected-servers #browse #browse-list li .typeico{
     width:4%;
+}
+#servers #connected-servers #browse #browse-list li .name{
+    padding: 0.5%;
+    margin: 0.5%;
 }

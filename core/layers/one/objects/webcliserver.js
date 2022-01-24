@@ -96,6 +96,7 @@ class FtipiWebCliServer{
 		elem.appendChild(elemico)
 
 		const name = document.createElement('span')
+		name.classList.add('name')
 		name.innerText = infos.name
 
 		elem.appendChild(name)
