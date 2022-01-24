@@ -58,10 +58,23 @@
 #servers #connected-servers #browse #browse-list li:hover{
     background: rgba(0,0,0,0.3);
 }
+#servers #connected-servers #browse #browse-list li.selected{
+    background: rgba(255,255,255,0.8);
+    /* color: #0066ff; */
+}
 #servers #connected-servers #browse #browse-list li .typeico{
-    width:4%;
+    width:4vw;
+    height: 6vh;
+    margin: 0.5%;
 }
 #servers #connected-servers #browse #browse-list li .name{
     padding: 0.5%;
     margin: 0.5%;
+}
+#servers #connected-servers #browse #browse-list li:hover,#servers #connected-servers #browse #browse-list li.selected .inf{
+    display: flex;
+}
+#servers #connected-servers #browse #browse-list li .inf{
+    display: none;
+    flex-direction: row;
 }

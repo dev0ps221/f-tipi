@@ -98,9 +98,41 @@ class FtipiWebCliServer{
 		const name = document.createElement('span')
 		name.classList.add('name')
 		name.innerText = infos.name
+		
+		name.addEventListener(
+			'click',
+			e=>{
+				elem.classList[(elem.classList.contains('selected'))?'remove':'add']('selected')
+			}
+		)
 
+		const infs = document.createElement('div')
+		infs.classList.add('inf')
+		Object.keys(infos).forEach(
+			info=>{
+
+				const infobox = document.createElement('span')
+				const infoboxlabel = document.createElement('span')
+				const infoboxdata  = document.createElement('span')
+
+				infoboxlabel.classList.add('infolabel')
+				infoboxlabel.innerText = info
+				
+				infoboxdata.classList.add('infodata')
+				infoboxdata.innerText = infos[info]
+				
+
+				infobox.appendChild(infoboxlabel)
+				infobox.appendChild(infoboxdata)
+
+				infs.appendChild(infobox)
+
+			}
+		)
+		
 		elem.appendChild(name)
-
+		elem.appendChild(infs)
+		
 		return elem
 	}
 
