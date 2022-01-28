@@ -39,7 +39,15 @@
     width: 100%;
 }
 #servers #connected-servers #browse div{
-    height: 5%;
+    height: 10%;
+}
+#servers #connected-servers #browse #browse-path{
+    display: flex;
+}
+#servers #connected-servers #browse #browse-path #folderactions{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
 }
 #servers #connected-servers #browse #browse-list{
     padding: 0;
