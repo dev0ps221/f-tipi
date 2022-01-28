@@ -3,6 +3,7 @@ body{
     width: 100vw;
     height: 100vh;
     display: flex;
+    font-size: 14px;
     flex-direction: column;
     margin: 0;
     padding: 0;

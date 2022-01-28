@@ -51,16 +51,24 @@
 }
 #servers #connected-servers #browse #browse-list li{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     cursor: pointer;
     border-top: 1px solid rgba(0,0,0,0.5);
 }
 #servers #connected-servers #browse #browse-list li:hover{
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.2);
 }
 #servers #connected-servers #browse #browse-list li.selected{
-    background: rgba(255,255,255,0.8);
+    background: rgba(0,0,0,0.4);
+    transition:1.2s;
+
+    /* background: #002255; */
+    
     /* color: #0066ff; */
+}
+#servers #connected-servers #browse #browse-list li .elemheading{
+    display: flex;
+    flex-direction: row;
 }
 #servers #connected-servers #browse #browse-list li .typeico{
     width:4vw;
@@ -71,10 +79,39 @@
     padding: 0.5%;
     margin: 0.5%;
 }
-#servers #connected-servers #browse #browse-list li:hover,#servers #connected-servers #browse #browse-list li.selected .inf{
+#servers #connected-servers #browse #browse-list li:hover,#servers #connected-servers #browse #browse-list li.selected:hover .inf{
     display: flex;
+}
+#servers #connected-servers #browse #browse-list li.selected:hover .inf{
+    transition:1.2s;
 }
 #servers #connected-servers #browse #browse-list li .inf{
     display: none;
+    width:100%;
+    transition: 1s;
+    overflow: hidden;
+    overflow-x: scroll;
     flex-direction: row;
+    justify-content: left;
+}
+#servers #connected-servers #browse #browse-list li .inf > *{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.5%;
+    margin: 0.5%;
+    margin-left: 1%;
+    min-width: 10%;
+}
+#servers #connected-servers #browse #browse-list li .inf > * > *{
+    padding: 1% ;
+    border-radius: 0.6em;
+    background:rgb(0,0,0,0.8);
+}
+#servers #connected-servers #browse #browse-list li .inf > * > .infolabel{
+    color:white;
+}
+#servers #connected-servers #browse #browse-list li .inf > * > .infodata{
+    background:rgb(255,255,255,0.8);
+    padding: 2%;
 }

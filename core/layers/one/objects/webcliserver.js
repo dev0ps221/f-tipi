@@ -70,30 +70,21 @@ class FtipiWebCliServer{
 	}
 
 	buildContentListElem({type,infos}){
+		const filetypes = this.filetypes
 		const elem = document.createElement('li')
+		const elemheading = document.createElement('div')
+		elemheading.classList.add('elemheading')
 		const elemico = document.createElement('img')
 		elemico.classList.add('typeico')
 		let filetype = `${type.toLowerCase().replace('ftipi','')}`
 		let fileextension = this.getFileExtension(infos.name)
-		filetype = `${fileextension=='txt'?'text':''}${filetype}`
-		filetype = `${fileextension=='sql'?'sql':''}${filetype}`
-		filetype = `${fileextension=='php'?'php':''}${filetype}`
-		filetype = `${fileextension=='png'?'png':''}${filetype}`
-		filetype = `${fileextension=='jpeg'?'jpeg':''}${filetype}`
-		filetype = `${fileextension=='jpg'?'jpg':''}${filetype}`
-		filetype = `${fileextension=='gif'?'gif':''}${filetype}`
-		filetype = `${fileextension=='ico'?'ico':''}${filetype}`
-		filetype = `${fileextension=='avi'?'avi':''}${filetype}`
-		filetype = `${fileextension=='mp4'?'mp4':''}${filetype}`
-		filetype = `${fileextension=='mpeg4'?'mpeg4':''}${filetype}`
-		filetype = `${fileextension=='3gp'?'3gp':''}${filetype}`
-		filetype = `${fileextension=='html'?'html':''}${filetype}`
-		filetype = `${fileextension=='mp3'?'mp3':''}${filetype}`
-		filetype = `${fileextension=='wav'?'wav':''}${filetype}`
-		filetype = `${fileextension=='ogg'?'ogg':''}${filetype}`
-		filetype = `${fileextension=='rb'?'ruby':''}${filetype}`
+		Object.keys(filetypes).forEach(
+			ext=>{
+				filetype = `${fileextension==ext?filetypes[ext]:''}${filetype}`
+			}
+		)
 		elemico.src = `/pics/${filetype}.ico`
-		elem.appendChild(elemico)
+		elemheading.appendChild(elemico)
 
 		const name = document.createElement('span')
 		name.classList.add('name')
@@ -130,7 +121,8 @@ class FtipiWebCliServer{
 			}
 		)
 		
-		elem.appendChild(name)
+		elemheading.appendChild(name)
+		elem.appendChild(elemheading)
 		elem.appendChild(infs)
 		
 		return elem
@@ -184,7 +176,32 @@ class FtipiWebCliServer{
 		)
 	}
 
+	setFileTypes(){
+
+		this.filetypes = {
+			'txt':'text'
+			,'sql':'sql'
+			,'php':'php'
+			,'png':'png'
+			,'jpeg':'jpeg'
+			,'jpg':'jpg'
+			,'gif':'gif'
+			,'ico':'ico'
+			,'avi':'avi'
+			,'mp4':'mp4'
+			,'mpeg4':'mpeg4'
+			,'3gp':'3gp'
+			,'html':'html'
+			,'mp3':'mp3'
+			,'wav':'wav'
+			,'ogg':'ogg'
+			,'rb':'ruby'
+		}
+	
+	}
+
 	constructor(data){
+		this.setFileTypes()
 		this.data = data
 		this.content = null
 		this.gotcontent = false
