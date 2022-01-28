@@ -12,7 +12,7 @@ class ConnectionActions{
 
   async cwd(pth,cb,prom=null){
     return await this.client.cwd(pth,(...args)=>{
-      this.currentdir = pth
+      this.currentdir = path.join(pth)
       this.updateContent(
         ()=>{
           cb(...args)

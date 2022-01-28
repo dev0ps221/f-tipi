@@ -46,7 +46,7 @@ class FtipiWebSocket{
 							server.getContent(
 								(data)=>{
 									this.socket.emit(
-										'/currentdirDataRes',data,name
+										'/currentdirDataRes',data,path.join(name)
 									)
 								}
 							)
