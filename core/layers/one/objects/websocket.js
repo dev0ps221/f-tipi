@@ -1,5 +1,5 @@
 const FtipiWebCli = require("./webcli")
-
+const path = require('path')
 class FtipiWebSocket{
 
 	configure(){
