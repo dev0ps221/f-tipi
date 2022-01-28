@@ -19,17 +19,20 @@
     margin: 0;
     padding: 0;
     width: 20%;
+    height: 100%;
+    min-height: 100%;
     padding-bottom: 3%;
     overflow: hidden;
     overflow-y: scroll;
-    background: #0b2228;
-    color: #0066ff;
+    /* background: #0b2228; */
+    /* color: #0066ff; */
+    /* color: #ff0066; */
 }
 #servers .list .server{
     margin: 1.5%;
     display: flex;
     flex-direction: column;
-    background: #002255;
+    /* background: #002255; */
     width: 100%;
     padding: 0;
     box-shadow: 0 0 0.5px 0.5px #2b1100;

@@ -3,10 +3,11 @@ body{
     width: 100vw;
     height: 100vh;
     display: flex;
-    font-size: 14px;
+    font-size: 12px;
     flex-direction: column;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #164450;
+    /* background: #164450; */
+    background:#00222b;
 }
