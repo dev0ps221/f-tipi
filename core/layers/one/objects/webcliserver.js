@@ -69,6 +69,15 @@ class FtipiWebCliServer{
 		const currentdir = browse.querySelector('#currentdir')
 		currentdir.innerText = this.actualpath
 
+		const uploadbutton = null
+			browse.querySelectorAll('button').forEach(button=>{
+				if(button.innerText==='upload') uploadbutton = button
+			}
+		
+		)
+		
+		if(uploadbutton)uploadbutton.disabled = 0
+
 		const contentlist = browse.querySelector("#browse-list")
 		contentlist.innerText = ""
 		this.content.forEach(
