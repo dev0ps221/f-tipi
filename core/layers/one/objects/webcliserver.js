@@ -85,56 +85,93 @@ class FtipiWebCliServer{
 		)
 		elemico.src = `/pics/${filetype}.ico`
 		elemheading.appendChild(elemico)
-
-		const name = document.createElement('span')
-		name.classList.add('name')
-		name.innerText = infos.name
+		const elemactions = document.createElement('div')
+		elemactions.classList.add('actions')
+		const content = document.createElement('span')
+		content.classList.add('content')
+		content.innerText = infos.name
 		
-		name.addEventListener(
+		content.addEventListener(
 			'click',
 			e=>{
-				elem.classList[(elem.classList.contains('selected'))?'remove':'add']('selected')
+				if(e.target.className!='action'){
+					elem.classList[(elem.classList.contains('selected'))?'remove':'add']('selected')
+				}
 			}
 		)
+			
+			// const infs = document.createElement('div')
+			// infs.classList.add('inf')
+			// Object.keys(infos).forEach(
+			// 	info=>{
+			// 		if(info != 'type'){
+			// 			const infobox = document.createElement('span')
+			// 			infobox.classList.add("infobox")
+	
+			// 			const infoboxlabel = document.createElement('span')
+			// 			const infoboxdata  = document.createElement('span')
+						
+			// 			infoboxlabel.classList.add('infolabel')
+			// 			infoboxlabel.innerText = info
+						
+			// 			infoboxdata.classList.add('infodata')
+			// 			infoboxdata.innerText = infos[info]
+						
+						
+			// 			infobox.appendChild(infoboxlabel)
+			// 			infobox.appendChild(infoboxdata)
+						
+			// 			infs.appendChild(infobox)
+			// 		}
+					
+					
+			// 	}
+			// )
+			content.appendChild(elemactions)
+			elemheading.appendChild(content)
+			
+			
+			const actionlist = []
 
-		const infs = document.createElement('div')
-		infs.classList.add('inf')
-		Object.keys(infos).forEach(
-			info=>{
+			const open = document.createElement('button')
+			open.classList.add('action')
+			open.innerText = 'open'
+			actionlist.push(open)
 
-				const infobox = document.createElement('span')
-				const infoboxlabel = document.createElement('span')
-				const infoboxdata  = document.createElement('span')
+			const download = document.createElement('button')
+			download.classList.add('action')
+			download.innerText = 'download'
+			actionlist.push(download)
+			actionlist.forEach(
+				action=>{
+					action.addEventListener(
+						'click',e=>{
+							e.preventDefault()
+							if(action.innerText == 'open'){
+								alert("let's open the folder")
+							}
+						}
+					)
+					elemactions.appendChild(action)
 
-				infoboxlabel.classList.add('infolabel')
-				infoboxlabel.innerText = info
-				
-				infoboxdata.classList.add('infodata')
-				infoboxdata.innerText = infos[info]
-				
+				}
+			)
+			
+			
 
-				infobox.appendChild(infoboxlabel)
-				infobox.appendChild(infoboxdata)
-
-				infs.appendChild(infobox)
-
-			}
-		)
+			elem.appendChild(elemheading)
+			// content.appendChild(infs)
+			
+			return elem
+		}
 		
-		elemheading.appendChild(name)
-		elem.appendChild(elemheading)
-		elem.appendChild(infs)
-		
-		return elem
-	}
-
-	updateContentView(){
-		alert('lets update connected server view then')
-
-		if(this.content){
-			const connectedservers  = document.querySelector('#connected-servers')
-			cli.refreshContentViewNav(connectedservers)
-			this.refreshContentViewBrowse(connectedservers)
+		updateContentView(){
+			alert('lets update connected server view then')
+			
+			if(this.content){
+				const connectedservers  = document.querySelector('#connected-servers')
+				cli.refreshContentViewNav(connectedservers)
+				this.refreshContentViewBrowse(connectedservers)
 
 		}else{
 			this.getContent()
