@@ -30,7 +30,6 @@ class FtipiWebCli{
         const connection = conlistsize
             ?   this.connectedservers[conlist[this.conIdx()]]
             :   null
-		console.log(connection)
 		return connection
 	}
 

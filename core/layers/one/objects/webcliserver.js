@@ -8,6 +8,21 @@ class FtipiWebCliServer{
 		)
 	}
 
+
+
+	cd(pathname){
+		const actualserver = cli.focusedConnection()
+		if(actualserver){
+			const {name} = actualserver
+			post(
+				'cd',{name,pathname}
+			)
+		}else{
+			console.log("lost actual server")
+		}
+
+	}
+
 	buildWebView(){
     
 		const serverview = document.createElement('div')
@@ -55,6 +70,7 @@ class FtipiWebCliServer{
 		currentdir.innerText = this.actualpath
 
 		const contentlist = browse.querySelector("#browse-list")
+		contentlist.innerText = ""
 		this.content.forEach(
 			elem=>{
 				contentlist.appendChild(this.buildContentListElem(elem))
@@ -100,79 +116,49 @@ class FtipiWebCliServer{
 			}
 		)
 			
-			// const infs = document.createElement('div')
-			// infs.classList.add('inf')
-			// Object.keys(infos).forEach(
-			// 	info=>{
-			// 		if(info != 'type'){
-			// 			const infobox = document.createElement('span')
-			// 			infobox.classList.add("infobox")
-	
-			// 			const infoboxlabel = document.createElement('span')
-			// 			const infoboxdata  = document.createElement('span')
-						
-			// 			infoboxlabel.classList.add('infolabel')
-			// 			infoboxlabel.innerText = info
-						
-			// 			infoboxdata.classList.add('infodata')
-			// 			infoboxdata.innerText = infos[info]
-						
-						
-			// 			infobox.appendChild(infoboxlabel)
-			// 			infobox.appendChild(infoboxdata)
-						
-			// 			infs.appendChild(infobox)
-			// 		}
-					
-					
-			// 	}
-			// )
-			content.appendChild(elemactions)
-			elemheading.appendChild(content)
-			
-			
-			const actionlist = []
-
-			const open = document.createElement('button')
-			open.classList.add('action')
-			open.innerText = 'open'
-			actionlist.push(open)
-
-			const download = document.createElement('button')
-			download.classList.add('action')
-			download.innerText = 'download'
-			actionlist.push(download)
-			actionlist.forEach(
-				action=>{
-					action.addEventListener(
-						'click',e=>{
-							e.preventDefault()
-							if(action.innerText == 'open'){
-								alert("let's open the folder")
-							}
-						}
-					)
-					elemactions.appendChild(action)
-
-				}
-			)
-			
-			
-
-			elem.appendChild(elemheading)
-			// content.appendChild(infs)
-			
-			return elem
-		}
+		content.appendChild(elemactions)
+		elemheading.appendChild(content)
 		
-		updateContentView(){
-			alert('lets update connected server view then')
-			
-			if(this.content){
-				const connectedservers  = document.querySelector('#connected-servers')
-				cli.refreshContentViewNav(connectedservers)
-				this.refreshContentViewBrowse(connectedservers)
+		
+		const actionlist = []
 
+		const open = document.createElement('button')
+		open.classList.add('action')
+		open.innerText = 'open'
+		actionlist.push(open)
+
+		const download = document.createElement('button')
+		download.classList.add('action')
+		download.innerText = 'download'
+		actionlist.push(download)
+		actionlist.forEach(
+			action=>{
+				action.addEventListener(
+					'click',e=>{
+						e.preventDefault()
+						if(action.innerText == 'open'){
+							this.cd(infos.fullpath)
+						}
+					}
+				)
+				elemactions.appendChild(action)
+
+			}
+		)
+		
+		
+
+		elem.appendChild(elemheading)
+		// content.appendChild(infs)
+		
+		return elem
+	}
+	
+	updateContentView(){
+		if(this.content){
+			const connectedservers  = document.querySelector('#connected-servers')
+			cli.refreshContentViewNav(connectedservers)
+			this.refreshContentViewBrowse(connectedservers)
 		}else{
 			this.getContent()
 		}

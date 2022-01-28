@@ -29,6 +29,11 @@ class FtpConnexion{
 			this.connectionError(error)
 		}
 	}
+	cd(pth,cb){
+		this.do(
+			'cwd',pth,cb
+		)
+	}
 	getContent(cb){
 		this.do(
 			'getContent',cb

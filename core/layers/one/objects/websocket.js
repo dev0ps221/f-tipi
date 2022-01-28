@@ -35,6 +35,28 @@ class FtipiWebSocket{
 				}
 			}
 		)
+		this.socket.on(
+			'cd',({name,pathname})=>{
+				console.log(`let's open ${pathname} on ${name}`)
+				const server = this.manager.getServer(name)
+				if(server){
+					server.cd(
+						pathname
+						,()=>{
+							server.getContent(
+								(data)=>{
+									this.socket.emit(
+										'/currentdirDataRes',data,name
+									)
+								}
+							)
+						}
+					)
+				}else{
+					console.log('log missed the server ',name)
+				}
+			}
+		)
 
 	}
 

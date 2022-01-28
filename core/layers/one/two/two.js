@@ -11,7 +11,14 @@ class ConnectionActions{
 
 
   async cwd(pth,cb,prom=null){
-    return await this.client.cwd(pth,cb,prom)
+    return await this.client.cwd(pth,(...args)=>{
+      this.currentdir = pth
+      this.updateContent(
+        ()=>{
+          cb(...args)
+        }
+      )
+    },prom)
   }
 
   async pwd(cb){
@@ -75,6 +82,7 @@ class ConnectionActions{
   }
 
   setCurrentDirContent(content,cb){
+    this.currentdircontent = []
     content.forEach(
       file=>{
         file.path = this.currentdir
