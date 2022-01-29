@@ -124,8 +124,27 @@ class FtpConnexion{
 		const filelist = []
 		const tmplist = fs.readdirSync(
 			this.uploadPath
+		)
+		tmplist.forEach(
+			elem=>{
+				const [name,filename] = elem.split('_')
+				const filepath = `${this.uploadPath}/${elem}`
+				if(name==this.n)filelist.push(filepath)
+			}
 		) 
 		console.log('upload temp list is',filelist)
+		filelist.forEach(
+			file=>{
+				this.do(
+					'upload',file,()=>{
+						console.log('uploaded file ',file)
+						console.log('removing from temp')
+						fs.unlinkSync(file)
+						console.log('removed from temp')
+					}
+				)
+			}
+		)
 	}
 
 	whenReady(cb){

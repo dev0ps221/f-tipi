@@ -22,9 +22,9 @@ class ConnectionActions{
     },prom)
   }
 
-  async upload(srcpath,tgtpath,cb){
+  async upload(srcpath,cb){
     this.client.put(
-      srcpath,tgtpath,cb
+      srcpath,this.currentdir,cb
     )
   }
 
