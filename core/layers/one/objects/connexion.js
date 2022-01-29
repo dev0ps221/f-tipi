@@ -136,11 +136,16 @@ class FtpConnexion{
 		filelist.forEach(
 			file=>{
 				this.do(
-					'upload',file,()=>{
-						console.log('uploaded file ',file)
-						console.log('removing from temp')
-						fs.unlinkSync(file)
-						console.log('removed from temp')
+					'upload',file,(err,list)=>{
+						if(!err){
+							console.log('uploaded file ',file)
+							console.log('removing from temp')
+							fs.unlinkSync(file)
+							console.log('removed from temp')
+							return
+						}
+						console.log('errors uploading file')
+						console.log(err)
 					}
 				)
 			}
@@ -166,7 +171,6 @@ class FtpConnexion{
 		this.client		= null
 		this.uploadPath = path.join(__dirname,'..','two','uptemp')
 		this.setupClient()
-		this.uploadFiles()
 	}
 }
 module.exports = FtpConnexion
