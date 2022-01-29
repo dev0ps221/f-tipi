@@ -11,6 +11,7 @@ class FtipiWebCliServer{
 
 
 	cd(pathname){
+
 		const actualserver = cli.focusedConnection()
 		if(actualserver){
 			const {name} = actualserver
@@ -59,18 +60,20 @@ class FtipiWebCliServer{
 		return serverview
 	
 	}
-
-
 	
     refreshContentViewBrowse(root){
 		const browse = root.querySelector('#browse')
-		
+		const uploadfile = document.createElement('input')
+		uploadfile.type = 'file'
+		uploadfile.multiple = 1
 		
 		const currentdir = browse.querySelector('#currentdir')
 		currentdir.innerText = this.actualpath
 
-		let uploadbutton = null
-			browse.querySelectorAll('button').forEach(button=>{
+		let  uploadbutton = null
+
+		browse.querySelectorAll('button').forEach(
+			button=>{
 				if(button.innerText==='upload') uploadbutton = button
 			}
 		
@@ -86,7 +89,66 @@ class FtipiWebCliServer{
 			}
 		)
 
+		uploadbutton.addEventListener(
+			'click',e=>{
+				uploadfile.click()
+			}
+		)
+		uploadfile.addEventListener(
+			'change',this.uploadFileChange
+		)
+		
+		
     }
+	uploadFileChange(e){
+		alert('lets upload some files to the server')
+		const loadDone=(uploaddata)=>{
+			alert('loading data done ..\nready for upload')
+			console.log("uploaddata is ",uploaddata)
+			const actualserver = cli.servers[cli.connectedIdx]
+			if(actualserver){
+				post(
+					'fileupload',{name:actualserver.name,files:uploaddata}
+				)
+			}
+		}
+
+
+		function parseFileData(dataUrl){
+			const parts = dataUrl.split(",")
+			const datainfos = parts[0].replace('data:','').split(';')
+			const [fileinfos,filencoding] = datainfos
+			const rawdata  = parts[1]
+			const [filetype,fileextension] = fileinfos.split('/')
+			return {
+				rawdata,filetype,fileextension,filencoding
+			}
+		}
+
+		Array.from(e.target.files).forEach(
+			(file,idx)=>{
+				let r = new FileReader()
+				let uploaddata = []
+				r.addEventListener('progress', (event) => {
+					if (event.loaded && event.total) {
+					const percent = (event.loaded / event.total) * 100;
+					console.log(`Progress: ${Math.round(percent)}%`);
+					}
+				})
+
+				r.addEventListener(
+					'load',ev=>{
+						uploaddata.push({infos:{name:file.name,size:file.size,lastModified:file.lastModified},data:parseFileData(r.result)})
+						if(idx+1==e.target.files.length){
+							loadDone(uploaddata)
+						}
+					}
+				)
+				r.readAsDataURL(file)
+			}
+		)
+		console.log(e.target.files)
+	}
 
 	getFileExtension(name){
 		let namearr = name.split('.')

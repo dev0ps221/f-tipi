@@ -20,6 +20,26 @@ class FtipiWebSocket{
 			}
 		)
 		this.socket.on(
+			'fileupload',({name,files})=>{
+				console.log('fileupload to ',name)
+
+				const server = this.manager.getServer(name)
+				if(server){
+					
+					server.saveListToTemp(files,()=>{
+						console.log('files uploaded to temp')
+						console.log('uploading to server')
+
+						server.uploadFiles()
+
+					})
+
+				}else{
+
+				}
+			}
+		)
+		this.socket.on(
 			'/currentdirData',name=>{
 				const server = this.manager.getServer(name)
 				if(server){

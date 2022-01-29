@@ -22,6 +22,12 @@ class ConnectionActions{
     },prom)
   }
 
+  async upload(srcpath,tgtpath,cb){
+    this.client.put(
+      srcpath,tgtpath,cb
+    )
+  }
+
   async pwd(cb){
     return await this.client.pwd(
       (e,data)=>{

@@ -1,4 +1,4 @@
-
+const fs = require('fs')
 const connector	=	require('ftp')
 const path = require('path')
 const layerspath		=	path.join(__dirname,'..')
@@ -101,6 +101,33 @@ class FtpConnexion{
 		return this.ready
 	}
 	
+	saveTemp(file,cb){
+		fs.writeFileSync(path.join(this.uploadPath,`${this.n}_${file.infos.name}`),file.data.rawdata)
+		cb(path.join(this.uploadPath,`${this.n}_${file.infos.name}`))
+	}
+
+	saveListToTemp(list,cb){
+		list.forEach(
+			(file,idx)=>{
+				console.log(`uploading ${file.infos.name} to temp dir`)
+				this.saveTemp(file,(filepath)=>{
+					console.log(` ${file.infos.name} saved as  ${filepath} `)
+					if(idx+1 == list.length){
+						cb()
+					}
+				})
+			}
+		)
+	}
+
+	uploadFiles(){
+		const filelist = []
+		const tmplist = fs.readdirSync(
+			this.uploadPath
+		) 
+		console.log('upload temp list is',filelist)
+	}
+
 	whenReady(cb){
 		let interval    = 1500
 		let checkready  = null
@@ -117,8 +144,10 @@ class FtpConnexion{
 	constructor(creds,name){
 		this.c 			= ()=>{return creds}
 		this.n 			= name
-		this.client	= null
+		this.client		= null
+		this.uploadPath = path.join(__dirname,'..','two','uptemp')
 		this.setupClient()
+		this.uploadFiles()
 	}
 }
 module.exports = FtpConnexion
