@@ -30,7 +30,7 @@ class ConnectionActions{
 
   async download(tgtpath,cb){
     this.client.get(
-      tgtpath,this.currentdir,cb
+      tgtpath,cb
     )
   }
 
