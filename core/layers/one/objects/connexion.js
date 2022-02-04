@@ -107,6 +107,7 @@ class FtpConnexion{
 	}
 
 	saveListToTemp(list,cb){
+		console.log('called ...')
 		list.forEach(
 			(file,idx)=>{
 				console.log(`uploading ${file.infos.name} to temp dir`)

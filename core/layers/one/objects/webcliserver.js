@@ -19,7 +19,22 @@ class FtipiWebCliServer{
 				'cd',{name,pathname}
 			)
 		}else{
-			console.log("lost actual server")
+			console.warn("lost actual server")
+		}
+
+	}
+	
+	download(pathname){
+
+		const actualserver = cli.focusedConnection()
+		if(actualserver){
+			const {name} = actualserver
+			const files = [pathname]
+			post(
+				'filedownload',{name,files}
+			)
+		}else{
+			console.warn("lost actual server")
 		}
 
 	}
@@ -209,6 +224,9 @@ class FtipiWebCliServer{
 						e.preventDefault()
 						if(action.innerText == 'open'){
 							this.cd(infos.fullpath)
+						}
+						if(action.innerText == 'download'){
+							this.download(infos.fullpath)
 						}
 					}
 				)

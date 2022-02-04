@@ -40,6 +40,19 @@ class FtipiWebSocket{
 			}
 		)
 		this.socket.on(
+			'filedownload',({name,files})=>{
+				console.log('fileupload to ',name)
+
+				const server = this.manager.getServer(name)
+				if(server){
+					console.log("let's download files ")
+					console.log(files)
+				}else{
+
+				}
+			}
+		)
+		this.socket.on(
 			'/currentdirData',name=>{
 				const server = this.manager.getServer(name)
 				if(server){
