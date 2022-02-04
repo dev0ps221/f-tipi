@@ -1,6 +1,6 @@
+const fs = require('fs')
 const FtipiWebCli = require("./webcli")
 const path = require('path')
-const { download } = require("express/lib/response")
 class FtipiWebSocket{
 
 	configure(){
@@ -43,17 +43,54 @@ class FtipiWebSocket{
 		this.socket.on(
 			'filedownload',({name,files})=>{
 				console.log('fileupload to ',name)
-
 				const server = this.manager.getServer(name)
 				if(server){
+					let fls =[]
+					let errs =[]
+					const final = ()=>{
+						console.log('heyyy ',fls)
+						if(errs.length){
+							console.log('got some errors on downlad')
+							errs.forEach(
+								err=>{
+									console.log(`for (${err[0]})\n`)
+									console.log(`error is \n[\n\t${err[0]}\n]\n`)
+								}
+							)
+						}
+						fls.forEach(
+							filepath=>{
+								console.log('hey ',filepath)
+								this.socket.emit(
+									'filedownload',filepath
+								)
+							}
+						)
+					}
 					files.forEach(
 						(filepath,idx)=>{
 							server.download(
-								filepath,(...res)=>{
-									console.log('download result',res)
-									if(idx+1 == files.length){
-										console.log(' action end ')
+								filepath,(err,stream)=>{
+									let filename = `${filepath.split('/')[filepath.split('/').length-1]}`
+									let filedownpath =  `${server.downloadPath}/${filename}`
+									if(err){
+										errs.push([filepath,`${filepath}`])
+										if(idx+1 == files.length){
+											final()
+										}
+										return 
 									}
+									stream.pipe(
+										fs.createWriteStream(filedownpath)
+									)
+									stream.once(
+										'close',()=>{
+											fls.push(`ddsf/${filename}`)
+											if(idx+1 == files.length){
+												final()
+											}
+										}
+									)
 								}
 							)
 

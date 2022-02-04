@@ -176,6 +176,7 @@ class FtpConnexion{
 		this.n 			= name
 		this.client		= null
 		this.uploadPath = path.join(__dirname,'..','two','uptemp')
+		this.downloadPath = path.join(__dirname,'..','two','downtemp')
 		this.setupClient()
 	}
 }

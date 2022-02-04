@@ -1,3 +1,5 @@
+const { get } = require("express/lib/response")
+
 class FtipiWebCli{
 
 	
@@ -84,6 +86,12 @@ class FtipiWebCli{
 			get(
 				'/currentdirDataRes',(data,name)=>{
 					this.getServerByName(name).setContent(data)
+				}
+			)
+
+			get(
+				'filedownload',tgt=>{
+					window.open(tgt)
 				}
 			)
 

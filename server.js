@@ -8,6 +8,7 @@ const io 		=	sio()
 const port		=	process.env.PORT || 8000
 const corepath	=	path.join(__dirname,'core/')
 const viewspath	=	path.join(__dirname,'webserver/views')
+const ddpath	=	path.join(corepath,'layers/one/two/downtemp')
 const assetspath	=	path.join(__dirname,'webserver/assets')
 const ftipi		=   new new require(path.join(corepath,'ftipi'))
 const fs = require('fs')
@@ -78,6 +79,21 @@ function startServer(cb=()=>{}){
 
 
 	configureApp(app)
+
+	app.get('/ddsf/:name',(req,res)=>{
+		console.log('asking for ',req.params)
+		if(fs.existsSync(path.join(ddpath,req.params.name))){
+
+			res.sendFile(path.join(ddpath,req.params.name))
+			fs.unlink(path.join(ddpath,req.params.name),()=>{})
+		}else{
+			res.send(
+				`
+					<script>if(window)window.close()</script>
+				`
+			)
+		}
+	})
 
 	app.get(
 		'/webcli.js',
