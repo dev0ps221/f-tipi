@@ -85,7 +85,12 @@ function startServer(cb=()=>{}){
 		if(fs.existsSync(path.join(ddpath,req.params.name))){
 
 			res.sendFile(path.join(ddpath,req.params.name))
-			fs.unlink(path.join(ddpath,req.params.name),()=>{})
+			res.on(
+				'end',()=>{
+					console.log('cool')
+					fs.unlink(path.join(ddpath,req.params.name),()=>{})
+				}
+			)
 		}else{
 			res.send(
 				`
