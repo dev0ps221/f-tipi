@@ -34,6 +34,11 @@ class FtpConnexion{
 			'cwd',pth,cb
 		)
 	}
+	download(pth,cb){
+		this.do(
+			'download',pth,cb
+		)
+	}
 	getContent(cb){
 		this.do(
 			'getContent',cb

@@ -1,5 +1,6 @@
 const FtipiWebCli = require("./webcli")
 const path = require('path')
+const { download } = require("express/lib/response")
 class FtipiWebSocket{
 
 	configure(){
@@ -45,6 +46,19 @@ class FtipiWebSocket{
 
 				const server = this.manager.getServer(name)
 				if(server){
+					files.forEach(
+						(filepath,idx)=>{
+							server.download(
+								filepath,(...res)=>{
+									console.log('download result',res)
+									if(idx+1 == files.length){
+										console.log(' action end ')
+									}
+								}
+							)
+
+						}
+					)
 					console.log("let's download files ")
 					console.log(files)
 				}else{

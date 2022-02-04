@@ -28,6 +28,12 @@ class ConnectionActions{
     )
   }
 
+  async download(tgtpath,cb){
+    this.client.get(
+      tgtpath,this.currentdir,cb
+    )
+  }
+
   async pwd(cb){
     return await this.client.pwd(
       (e,data)=>{
