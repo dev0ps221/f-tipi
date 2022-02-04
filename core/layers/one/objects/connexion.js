@@ -34,6 +34,15 @@ class FtpConnexion{
 			'cwd',pth,cb
 		)
 	}
+
+
+	rename(srcpth,dstpth,cb){
+		this.do(
+			'rename'
+			,srcpth,dstpth,cb
+		)
+	}
+
 	download(pth,cb){
 		this.do(
 			'download',pth,cb

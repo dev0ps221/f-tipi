@@ -48,7 +48,7 @@ class FtipiWebCli{
 		label.classList.add('list-label')
 		label.innerText = 'servers'
 		serversview.innerHTML = "" 
-		serversview.appendChild(label)
+		// serversview.appendChild(label)
 		this.servers.forEach(
 			server=>{
 				serversview.appendChild(

@@ -28,6 +28,12 @@ class ConnectionActions{
     )
   }
 
+  async rename(srcpth,dstpth,cb){
+    this.client.rename(
+      srcpth,dstpth,cb
+    )
+  }
+
   async download(tgtpath,cb){
     this.client.get(
       tgtpath,cb

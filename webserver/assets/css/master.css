@@ -9,7 +9,8 @@ body{
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background:#504410;
+    /* background:#504410; */
+    background: #241f1c;
     color: #88aa00;
     font-family: 'Supermercado One', cursive;
 

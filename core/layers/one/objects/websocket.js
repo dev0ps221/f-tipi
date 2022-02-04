@@ -41,6 +41,21 @@ class FtipiWebSocket{
 			}
 		)
 		this.socket.on(
+			'filerename'
+			,({name,srcpath,tgtpath})=>{
+				console.log('filerename',srcpath,' to ',tgtpath)
+				const server = this.manager.getServer(name)
+				if(server){
+					server.rename(
+						srcpath,dstpath,...args=>{
+							console.log('rename results are ',args)
+						}
+					)
+				}
+			}
+		
+		)
+		this.socket.on(
 			'filedownload',({name,files})=>{
 				console.log('fileupload to ',name)
 				const server = this.manager.getServer(name)

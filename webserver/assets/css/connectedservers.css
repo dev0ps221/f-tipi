@@ -54,6 +54,7 @@
     padding-bottom: 5%;
     height: 95%;
     overflow-y: scroll;
+    background: #483e37;
 }
 #servers #connected-servers #browse #browse-list li{
     display: flex;
