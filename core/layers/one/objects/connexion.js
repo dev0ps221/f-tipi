@@ -152,7 +152,7 @@ class FtpConnexion{
 				console.log(file)
 				console.log("finga toolou sisa upload process")
 				this.do(
-					'upload',file,file.replace(this.uploadPath,''),(err,list)=>{
+					'upload',file,file.replace(this.uploadPath,'').replace(`${this.n}_`,''),(err,list)=>{
 						if(!err){
 							console.log('uploaded file ',file)
 							console.log('removing from temp')

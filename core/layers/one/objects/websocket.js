@@ -31,7 +31,11 @@ class FtipiWebSocket{
 						console.log('files uploaded to temp')
 						console.log('uploading to server')
 
-						server.uploadFiles()
+						server.uploadFiles((e,r)=>{
+							this.socket.emit(
+								'fileuploadResults'
+							)
+						})
 
 					})
 

@@ -157,8 +157,6 @@ class FtipiWebCli{
 				return new FtipiWebCliServer(server)
 			}
 		)
-		console.log('updated servers')
-		console.log(this.servers)
 	}
 
 	constructor(window){
