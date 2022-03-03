@@ -157,6 +157,7 @@ class FtpConnexion{
 							console.log('removing from temp')
 							fs.unlinkSync(file)
 							console.log('removed from temp')
+							console.log(list)
 							return
 						}
 						console.log('errors uploading file')
