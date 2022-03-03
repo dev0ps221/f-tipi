@@ -22,9 +22,12 @@ class ConnectionActions{
     },prom)
   }
 
-  async upload(srcpath,cb){
+  async upload(srcpath,srcname,cb){
+    const tgtpath = `${this.currentdir}/${srcname}`
+    console.log(tgtpath, ' as upload target')
+    console.log(srcpath, ' as upload source')
     this.client.put(
-      srcpath,this.currentdir,cb
+      srcpath,tgtpath,cb
     )
   }
 

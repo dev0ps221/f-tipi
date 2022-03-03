@@ -116,7 +116,7 @@ class FtpConnexion{
 	}
 	
 	saveTemp(file,cb){
-		fs.writeFileSync(path.join(this.uploadPath,`${this.n}_${file.infos.name}`),file.data.rawdata)
+		fs.writeFileSync(path.join(this.uploadPath,`${this.n}_${file.infos.name}`),Buffer.from(file.data.rawdata,'base64'))
 		cb(path.join(this.uploadPath,`${this.n}_${file.infos.name}`))
 	}
 
@@ -147,11 +147,12 @@ class FtpConnexion{
 				if(name==this.n)filelist.push(filepath)
 			}
 		) 
-		console.log('upload temp list is',filelist)
 		filelist.forEach(
 			file=>{
+				console.log(file)
+				console.log("finga toolou sisa upload process")
 				this.do(
-					'upload',file,(err,list)=>{
+					'upload',file,file.replace(this.uploadPath,''),(err,list)=>{
 						if(!err){
 							console.log('uploaded file ',file)
 							console.log('removing from temp')
