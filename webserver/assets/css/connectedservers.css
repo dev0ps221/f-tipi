@@ -136,3 +136,12 @@
     display: flex;
     flex-direction: column;
 }
+@media screen and (max-width:997px){
+    #servers #connected-servers {
+        width: 100%;
+        height: 100%;
+    }
+    #servers #connected-servers #browse #browse-list li .typeico{
+        width: 10vw;
+    }
+}

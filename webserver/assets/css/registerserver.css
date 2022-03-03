@@ -21,7 +21,22 @@
 }
 @media screen and (max-width:997px){
     #registerserver{
-        max-height: 100%;
+        margin-top: 5%;
+        margin-bottom: 15%;
+        padding-top: 15%;
+        max-height: 10%;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+    #registerserver .field:first-of-type{
+        margin-top: 20%;
+    }
+    #registerserver #addserver{
+        position: absolute;
+        margin-top:-28%;
+        cursor: pointer;
+        padding:3%;
+        right:5%;
     }
     #registerserver form fieldset {
         flex-direction: column;

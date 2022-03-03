@@ -105,7 +105,7 @@ class ConnectionActions{
 
   setCurrentDirContent(content,cb){
     this.currentdircontent = []
-    content.forEach(
+    if((typeof content) != undefined && content.length ) content.forEach(
       file=>{
         file.path = this.currentdir
         file.fullpath = `${this.currentdir}/${file.name}`
